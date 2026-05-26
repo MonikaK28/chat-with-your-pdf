@@ -11,7 +11,7 @@ from groq import Groq
 model = SentenceTransformer(
     "sentence-transformers/all-MiniLM-L6-v2",
     device="cpu",
-    local_files_only=True
+    #local_files_only=True
 )
 client = chromadb.PersistentClient(path="pdf_db")
 groq_client = Groq(api_key="")
