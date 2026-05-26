@@ -9,9 +9,7 @@ from groq import Groq
 
 # setup
 model = SentenceTransformer(
-    "sentence-transformers/all-MiniLM-L6-v2",
-    device="cpu",
-    #local_files_only=True
+    "sentence-transformers/all-MiniLM-L6-v2"
 )
 client = chromadb.PersistentClient(path="pdf_db")
 groq_client = Groq(api_key="")
