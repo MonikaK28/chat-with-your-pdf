@@ -9,10 +9,12 @@ from groq import Groq
 
 # setup
 model = SentenceTransformer(
-    "sentence-transformers/all-MiniLM-L6-v2"
+    "sentence-transformers/all-MiniLM-L6-v2",
+    device="cpu",
+    local_files_only=True
 )
 client = chromadb.PersistentClient(path="pdf_db")
-groq_client = Groq(api_key="")
+groq_client = Groq(api_key=st.secrets["GROQ_API_KEY"])
 
 
 def extract_text(pdf_file):
@@ -34,7 +36,7 @@ def split_chunks(text, chunk_size=500, overlap=50):
 
 
 def store_chunks(chunks):
-    #client.delete_collection("pdf_chunks")
+    client.delete_collection("pdf_chunks")
     collection = client.get_or_create_collection("pdf_chunks")
     for i, chunk in enumerate(chunks):
         embedding = model.encode(chunk).tolist()
