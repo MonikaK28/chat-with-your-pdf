@@ -1,19 +1,21 @@
-#  source "/Users/bharath/Desktop/APTECH/ML APTECH/venv/bin/activate"
-# cd AI_PDF_chatting
-# streamlit run example_strlit.py
+
 import streamlit as st
 import fitz
 import chromadb
 from sentence_transformers import SentenceTransformer
 from groq import Groq
-
+st.markdown("""
+    <style>
+    .stApp {
+        background: linear-gradient(135deg, #1a1a2e, #16213e, #0f3460);
+    }
+    </style>
+""", unsafe_allow_html=True)
 # setup
 model = SentenceTransformer(
-    "sentence-transformers/all-MiniLM-L6-v2",
-    device="cpu",
-    local_files_only=True
+    "sentence-transformers/all-MiniLM-L6-v2"
 )
-client = chromadb.PersistentClient(path="pdf_db")
+client = chromadb.EphemeralClient()
 groq_client = Groq(api_key=st.secrets["GROQ_API_KEY"])
 
 
@@ -95,11 +97,8 @@ if uploaded_file:
         with st.spinner("Thinking..."):
             answer = ask(query, collection)
         st.write(answer)
-        with open(r"answer.txt", "w", encoding="utf-8") as f:
-            f.write(answer)
 
 
 
 
 
-# streamlit run app.py --logger.level=error
