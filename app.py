@@ -17,7 +17,6 @@ model = SentenceTransformer(
 )
 client = chromadb.EphemeralClient()
 groq_client = Groq(api_key=st.secrets["GROQ_API_KEY"])
-st.write("Key loaded:", st.secrets["GROQ_API_KEY"][:8] + "...")  # shows first 8 chars only
 
 def extract_text(pdf_file):
     doc = fitz.open(stream=pdf_file.read(), filetype="pdf")
