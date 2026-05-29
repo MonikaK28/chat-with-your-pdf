@@ -5,3 +5,5 @@ sentence-transformers
 groq
 torch
 torchvision
+langchain
+protobuf==3.20.3
