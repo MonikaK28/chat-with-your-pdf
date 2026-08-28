@@ -36,7 +36,11 @@ def split_chunks(text, chunk_size=500, overlap=50):
 
 
 def store_chunks(chunks):
-    #client.delete_collection("pdf_chunks")
+    try:
+        client.delete_collection("pdf_chunks")
+    except Exception:
+        pass  # Collection doesn't exist yet, safe to ignore
+        
     collection = client.get_or_create_collection("pdf_chunks")
     for i, chunk in enumerate(chunks):
         embedding = model.encode(chunk).tolist()
@@ -46,7 +50,6 @@ def store_chunks(chunks):
             documents=[chunk]
         )
     return collection
-
 
 def retrieve(query, collection, top_k=3):
     query_embedding = model.encode(query).tolist()
